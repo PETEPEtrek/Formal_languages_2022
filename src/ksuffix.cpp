@@ -11,12 +11,12 @@ std::string KSuffix::FindLenOfKSuffix() {
         }
         if (symbol >= 'a' && symbol <= 'c') {
             if (symbol == x) {
-                states.push(States{1, 1});
+                states.push(States{{1, {1}}});
             } else {
-                states.push(States{0, 1});
+                states.push(States{{0, {1}}});
             }
         } else if (symbol == '1') {
-            states.push(States{0, 0});
+            states.push(States{{0, {0}}});
         } else if (symbol == '*') {
             if (states.empty()) {
                 return "Bad Notation: not enough operands in notation for *";
@@ -65,10 +65,36 @@ std::string KSuffix::FindLenOfKSuffix() {
             auto second_elem = states.top();
             states.pop();
             States result{};
-            
+            for (auto& state: second_elem) {
+                for (auto& word_first: state.second) {
+                    for (auto& state_second: first_elem) {
+                        for (auto& word_second: state_second.second) {
+                            if (state_second.first == word_second) {
+                                result[state.first + state_second.first].emplace(word_first + word_second);
+                            } else {
+                                result[state_second.first].emplace(word_second + word_first);
+                            }
+                        }
+                    }
+                }
+            }
+            states.push(result);
         }
     }
-    return std::string();
+    if (states.size() > 1) {
+        return "Bad Notation: stack is not empty!";
+    }
+    if (states.top()[k].empty()) {
+        return "INF";
+    } else {
+        int64_t min = std::numeric_limits<int64_t>::max();
+        for (const auto& length: states.top()[k]) {
+            if (length < min) {
+                min = length;
+            }
+        }
+        return std::to_string(min);
+    }
 }
 bool KSuffix::isCorrectSymbol(char symbol) {
     std::string symbols = "abc1.+*";
