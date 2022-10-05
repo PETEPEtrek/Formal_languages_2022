@@ -21,9 +21,7 @@ std::string KSuffix::FindLenOfKSuffix() {
             if (states.empty()) {
                 return "Bad Notation: not enough operands in notation for *";
             }
-            if (states.top().count(0) == 0) {
-                states.top()[0] = {0};
-            }
+            states.top()[0].emplace(0);
             for (auto& state: states.top()) {
                 if (state.first == 0) {
                     continue;
