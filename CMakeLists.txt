@@ -3,9 +3,12 @@ project(Formal_languages_2022)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(SOURCE_FILES main.cpp)
+add_executable(formal_run ${SOURCE_FILES})
+
 include_directories(src)
 
-add_executable(Formal_languages_2022
-        src/ksuffix.cpp
-        src/ksuffix.hpp
-        main.cpp)
+add_subdirectory(src)
+add_subdirectory(test)
+
+target_link_libraries(formal_run src)
