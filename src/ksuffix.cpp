@@ -89,7 +89,7 @@ std::string KSuffix::FindLenOfKSuffix() {
 
         } else if (symbol == '.') {
             if (states.size() < 2) {
-                return "Bad Notation: not enough operands in notation for +";
+                return "Bad Notation: not enough operands in notation for .";
             }
             ConcatCase(states);
 
