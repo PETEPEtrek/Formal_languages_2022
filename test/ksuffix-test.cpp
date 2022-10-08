@@ -157,4 +157,21 @@ TEST(KSuffix, EquivalentAutomats) {
 
     k_suffix_first.ChangeK(5);
     ASSERT_EQ(k_suffix_first.FindLenOfKSuffix(), "INF");
+
+
+    std::string backPFirstSec = "aab+*.ab+ab+.*1b+.+";
+    std::string backPSecondSec = "a*ab+ab+.*.b*.";
+
+    char letterSec = 'b';
+    int64_t kSec = 2;
+
+    KSuffix k_suffix_firstSec{backPFirstSec, letterSec, kSec};
+    KSuffix k_suffix_secondSec{backPSecondSec, letterSec, kSec};
+
+    ASSERT_EQ(k_suffix_firstSec.FindLenOfKSuffix(), k_suffix_secondSec.FindLenOfKSuffix());
+    ASSERT_EQ(k_suffix_firstSec.FindLenOfKSuffix(), "2");
+
+    k_suffix_firstSec.ChangeK(1);
+    k_suffix_firstSec.ChangeX('a');
+    ASSERT_EQ(k_suffix_firstSec.FindLenOfKSuffix(), "1");
 }
