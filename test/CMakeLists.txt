@@ -1,3 +1,5 @@
+add_subdirectory(lib/gtest-1.11.0)
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_executable(runTests
         ksuffix-test.cpp
         main.cpp)
