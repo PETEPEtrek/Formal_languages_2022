@@ -1,4 +1,4 @@
-#include "ksuffix.hpp"
+#include "src/ksuffix.hpp"
 
 int main() {
     std::string backPolishNotation;

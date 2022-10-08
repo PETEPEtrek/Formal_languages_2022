@@ -3,9 +3,9 @@
 //
 
 #include "gtest/gtest.h"
-#include "ksuffix.hpp"
+#include "../src/ksuffix.hpp"
 
-TEST_F(KSuffix, checkSymbols) {
+TEST(KSuffix, checkSymbols) {
     std::string backP = "ab.";
     char letter = 'b';
     int64_t k = 2;
@@ -19,7 +19,7 @@ TEST_F(KSuffix, checkSymbols) {
 }
 
 
-TEST_F(KSuffix, checkKleeneStarCase) {
+TEST(KSuffix, checkKleeneStarCase) {
     using Lengths = std::unordered_set<int64_t>;
     using States = std::unordered_map<int64_t, Lengths>;
     std::string backP = "aa.*";
@@ -36,7 +36,7 @@ TEST_F(KSuffix, checkKleeneStarCase) {
 }
 
 
-TEST_F(KSuffix, checkPlus) {
+TEST(KSuffix, checkPlus) {
     using Lengths = std::unordered_set<int64_t>;
     using States = std::unordered_map<int64_t, Lengths>;
     std::string backP = "ab+";
@@ -54,7 +54,7 @@ TEST_F(KSuffix, checkPlus) {
 }
 
 
-TEST_F(KSuffix, checkConcat) {
+TEST(KSuffix, checkConcat) {
     using Lengths = std::unordered_set<int64_t>;
     using States = std::unordered_map<int64_t, Lengths>;
     std::string backP = "ab.c.";
@@ -77,7 +77,7 @@ TEST_F(KSuffix, checkConcat) {
     ASSERT_EQ(test_stack_, answer);
 }
 
-TEST_F(KSuffix, EasyCases) {
+TEST(KSuffix, EasyCases) {
     std::string backP = "ab.c.";
     char letter = 'c';
     int64_t k = 1;
@@ -101,7 +101,7 @@ TEST_F(KSuffix, EasyCases) {
 
 }
 
-TEST_F(KSuffix, HarderCases) {
+TEST(KSuffix, HarderCases) {
     std::string backP = "ab+c.aba.*.bac.+.+*";
     char letter = 'b';
     int64_t k = 2;
@@ -122,7 +122,7 @@ TEST_F(KSuffix, HarderCases) {
 }
 
 
-TEST_F(KSuffix, BadCases) {
+TEST(KSuffix, BadCases) {
     std::string backP = "There are incorrect symbols in this notation";
     char letter = 'a';
     int64_t k = 2;
@@ -142,7 +142,7 @@ TEST_F(KSuffix, BadCases) {
     ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "Bad Notation: not enough operands in notation for .");
 }
 
-TEST_F(KSuffix, EquivalentAutomats) {
+TEST(KSuffix, EquivalentAutomats) {
     std::string backPFirst = "aa.b+ab.+*";
     std::string backPSecond = "ab+*b.1+aa.*.";
 
