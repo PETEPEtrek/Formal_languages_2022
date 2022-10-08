@@ -77,7 +77,7 @@ TEST(KSuffix, checkConcat) {
     ASSERT_EQ(test_stack_, answer);
 }
 
-TEST(KSuffix, checkKSuffix) {
+TEST(KSuffix, EasyCases) {
     std::string backP = "ab.c.";
     char letter = 'c';
     int64_t k = 1;
@@ -87,15 +87,27 @@ TEST(KSuffix, checkKSuffix) {
     k_suffix.ChangeK(2);
     ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "INF");
 
-    k_suffix.ChangeNotation("ab+c.aba.*.bac.+.+*");
-    k_suffix.ChangeX('b');
-    ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "INF");
-
 
     k_suffix.ChangeNotation("ab.1+");
     k_suffix.ChangeX('b');
     k_suffix.ChangeK(1);
     ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "2");
+
+
+    k_suffix.ChangeNotation("aa.*");
+    k_suffix.ChangeX('a');
+    k_suffix.ChangeK(3);
+    ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "INF");
+
+}
+
+TEST(KSuffix, HarderCases) {
+    std::string backP = "ab+c.aba.*.bac.+.+*";
+    char letter = 'b';
+    int64_t k = 2;
+    KSuffix k_suffix{backP, letter, k};
+
+    ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "INF");
 
     k_suffix.ChangeNotation("acb..bab.c.*.ab.ba.+.+*a.");
     k_suffix.ChangeX('a');
@@ -103,7 +115,18 @@ TEST(KSuffix, checkKSuffix) {
     ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "4");
 
 
-    k_suffix.ChangeNotation("There are incorrect symbols in this notation");
+    k_suffix.ChangeNotation("ab+*b.1+b.ab+*.");
+    k_suffix.ChangeX('a');
+    k_suffix.ChangeK(3);
+    ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "4");
+}
+
+
+TEST(KSuffix, BadCases) {
+    std::string backP = "There are incorrect symbols in this notation";
+    char letter = 'a';
+    int64_t k = 2;
+    KSuffix k_suffix{backP, letter, k};
     ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "Bad Notation: bad symbols!");
 
     k_suffix.ChangeNotation("aa");
@@ -117,9 +140,21 @@ TEST(KSuffix, checkKSuffix) {
 
     k_suffix.ChangeNotation(".");
     ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "Bad Notation: not enough operands in notation for .");
+}
 
-    k_suffix.ChangeNotation("aa.*");
-    k_suffix.ChangeK(3);
-    ASSERT_EQ(k_suffix.FindLenOfKSuffix(), "INF");
+TEST(KSuffix, EquivalentAutomats) {
+    std::string backPFirst = "aa.b+ab.+*";
+    std::string backPSecond = "ab+*b.1+aa.*.";
 
+    char letter = 'a';
+    int64_t k = 4;
+
+    KSuffix k_suffix_first{backPFirst, letter, k};
+    KSuffix k_suffix_second{backPSecond, letter, k};
+
+    ASSERT_EQ(k_suffix_first.FindLenOfKSuffix(), k_suffix_second.FindLenOfKSuffix());
+    ASSERT_EQ(k_suffix_first.FindLenOfKSuffix(), "4");
+
+    k_suffix_first.ChangeK(5);
+    ASSERT_EQ(k_suffix_first.FindLenOfKSuffix(), "INF");
 }
