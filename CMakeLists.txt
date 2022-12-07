@@ -10,6 +10,6 @@ add_executable(formal_run ${SOURCE_FILES})
 include_directories(src)
 
 add_subdirectory(src)
-#add_subdirectory(test)
+add_subdirectory(test)
 
 target_link_libraries(formal_run src)

@@ -15,7 +15,13 @@ public:
     explicit Grammar(std::string& word) {
         D_.resize(word.length() + 1);
     }
+
+    explicit Grammar(std::string&& word) {
+        D_.resize(word.length() + 1);
+    }
+
     void AddRule(char A, std::string& alpha);
+    void AddRule(char A, std::string&& alpha);
 
     void AddSituations(int32_t i, Situation&& situation);
 

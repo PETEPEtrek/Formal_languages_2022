@@ -5,6 +5,10 @@ void Grammar::AddRule(char A, std::string& alpha) {
     rules_.emplace_back(A, alpha);
 }
 
+void Grammar::AddRule(char A, std::string&& alpha) {
+    rules_.emplace_back(A, alpha);
+}
+
 void Grammar::AddSituations(int32_t i, Situation&& situation) {
     D_[i].insert(situation);
 }
