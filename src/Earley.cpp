@@ -78,19 +78,24 @@ bool Earley::EarleyParse(std::string word) {
     grammar_.AddSituations(0, Situation{'0', "",
                                         "S", 0});
 
+    int32_t D_0_size = 0;
+    do {
+        D_0_size = static_cast<int32_t>(grammar_.GetSituations()[0].size());
+        Complete(0);
+        Predict(0);
+    } while (D_0_size != static_cast<int32_t>(grammar_.GetSituations()[0].size()));
+
     for (int32_t j = 0; j <= word.length(); ++j) {
         Scan(j, word);
 
-        auto D_j_size = static_cast<int32_t>(grammar_.GetSituations()[j].size());
-        while (true) {
+        int32_t D_j_size = 0;
+        do {
+            D_j_size = static_cast<int32_t>(grammar_.GetSituations()[j].size());
             Complete(j);
             Predict(j);
-            if (D_j_size == static_cast<int32_t>(grammar_.GetSituations()[j].size())) {
-                break;
-            }
-            D_j_size = static_cast<int32_t>(grammar_.GetSituations()[j].size());
-        }
+        } while (D_j_size != static_cast<int32_t>(grammar_.GetSituations()[0].size()));
     }
+
     for (auto& situation: grammar_.GetSituations()[static_cast<int32_t>(word.length())]) {
         if ((Situation) situation == Situation{'0', "S", "", 0}) {
             return true;
