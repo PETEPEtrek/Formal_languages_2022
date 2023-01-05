@@ -93,7 +93,7 @@ bool Earley::EarleyParse(std::string word) {
             D_j_size = static_cast<int32_t>(grammar_.GetSituations()[j].size());
             Complete(j);
             Predict(j);
-        } while (D_j_size != static_cast<int32_t>(grammar_.GetSituations()[0].size()));
+        } while (D_j_size != static_cast<int32_t>(grammar_.GetSituations()[j].size()));
     }
 
     for (auto& situation: grammar_.GetSituations()[static_cast<int32_t>(word.length())]) {
